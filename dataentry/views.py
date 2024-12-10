@@ -1,10 +1,15 @@
+import time
+
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from django.core.management import call_command
 from django.conf import settings
 from django.contrib import messages
 
 from .utils import get_custom_models
 from uploads.models import Upload
+from .task import import_data_task
+from .utils import check_csv_errors, send_email_notification
 
 
 
@@ -21,12 +26,17 @@ def import_data(request):
         base_url = settings.BASE_DIR
         file_path = str(base_url)  +str(relative_path)
 
-        #! Now here we call the our importdata command.
+        #! check for the csv error
         try:
-            call_command("importdata", file_path, model_name)
-            messages.success(request, "Data imported Successfully!")
+            check_csv_errors(file_path, model_name)
         except Exception as e:
             messages.error(request, str(e))
+            return redirect('import-data')
+
+        #| handle the impportdata task here.
+        import_data_task.delay(file_path, model_name)
+
+        messages.success(request, "Your data is being imported, you wil be notified once it is done!")
 
         return redirect("import-data")
 
@@ -35,3 +45,15 @@ def import_data(request):
         "custom_models": custom_models,
     }
     return render(request, "dataentry/importdata.html", context)
+
+
+def send_notification(request):
+    try:
+        mail_subject = "Import Data Completed!"
+        message = "Your data has been imported Successfully!"
+        to_email = 'handsomearjun360@gmail.com'
+        send_email_notification(mail_subject, message, to_email)
+    except Exception as e:
+        raise e
+
+    return HttpResponse("notification Sent!")

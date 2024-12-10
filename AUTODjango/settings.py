@@ -1,6 +1,8 @@
 from django.contrib.messages import constants as messages
 from pathlib import Path
 
+from decouple import config
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -8,10 +10,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-d@uoo^#*ja1at24@s1yg+x+h2#^)6$owm7=49(16ergintv146'
+SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config("DEBUG", default=False, cast=bool)
 
 ALLOWED_HOSTS = []
 
@@ -109,7 +111,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT =  BASE_DIR / 'static'
+STATICFILES_DIRS = [    
+    BASE_DIR / "static"   
+]   #| thhhis is for devepolment.
+
+# STATIC_ROOT =  BASE_DIR / 'static' #| for production
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -123,3 +129,16 @@ MESSAGE_TAGS = {
     messages.ERROR: "danger",
     50: "critical",
 }
+
+
+CELERY_BROKER_URL = "redis://localhost:6380"
+CELERY_WORKER_POOL = 'solo' #! for windows
+
+
+#| Email Configurations
+EMAIL_HOST = config("EMAIL_HOST")
+EMAIL_PORT = config("EMAIL_PORT", cast=int)
+EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = "Automate with Django <agentgupta216@gmail.com>"
