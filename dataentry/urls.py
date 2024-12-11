@@ -4,5 +4,5 @@ from . import views
 
 urlpatterns = [
     path("import-data/", views.import_data, name="import-data"),
-    path("send-mail/", views.send_notification)
+    path("export-data/", views.export_data, name="export-data"),
 ]
