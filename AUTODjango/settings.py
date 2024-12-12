@@ -30,6 +30,7 @@ INSTALLED_APPS = [
 
     'dataentry',
     'uploads',
+    'emails',
     'crispy_forms',
     'crispy_bootstrap5',
 ]
