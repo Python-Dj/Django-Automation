@@ -10,91 +10,108 @@
 {% block content %}
     <div class="container" style="padding: 50px;">
         <h2 class="text-center">Automate The Boring Stuff With Django</h2>
-        <div class="row pt-5">
-            <!-- Import data -->
-            <div class="col-md-4">
-                <a href="{% url 'import-data' %}" class="text-decoration-none text-dark">
-                    <div class="alert alert-primary shadow">
-                        <div class="card-header">
-                        <h4>Import Data</h4>
+        {% if user.is_authenticated %}
+            <div class="row pt-5">
+                <!-- Import data -->
+                <div class="col-md-4">
+                    <a href="{% url 'import-data' %}" class="text-decoration-none text-dark">
+                        <div class="alert alert-primary shadow">
+                            <div class="card-header">
+                            <h4>Import Data</h4>
+                            </div>
+                            <div class="card-body">
+                            <p class="card-text">Imports data from CSV file to any table.</p>
+                            </div>
                         </div>
-                        <div class="card-body">
-                        <p class="card-text">Imports data from CSV file to any table.</p>
+                    </a>
+                </div>
+
+                <!-- Export Data -->
+                <div class="col-md-4">
+                    <a href="{% url 'export-data' %}" class="text-decoration-none text-dark">
+                        <div class="alert alert-success shadow">
+                            <div class="card-header">
+                            <h4>Export Data</h4>
+                            </div>
+                            <div class="card-body">
+                            <p class="card-text">Exports data from a specific table to a CSV file.</p>
+                            </div>
                         </div>
-                    </div>
-                </a>
-            </div>
-            <!-- Export Data -->
-            <div class="col-md-4">
-                <a href="{% url 'export-data' %}" class="text-decoration-none text-dark">
-                    <div class="alert alert-success shadow">
-                        <div class="card-header">
-                        <h4>Export Data</h4>
+                    </a>
+                </div>
+
+                <!-- Bulk Emails -->
+                <div class="col-md-4">
+                    <a href="#" class="text-decoration-none text-dark">
+                        <div class="alert alert-danger shadow">
+                            <div class="card-header">
+                            <h4>Bulk Emails</h4>
+                            </div>
+                            <div class="card-body">
+                            <p class="card-text">Sends bulk emails to users</p>
+                            </div>
                         </div>
-                        <div class="card-body">
-                        <p class="card-text">Exports data from a specific table to a CSV file.</p>
-                        </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
             </div>
 
-            <!-- Bulk Emails -->
-            <div class="col-md-4">
-                <a href="#" class="text-decoration-none text-dark">
-                    <div class="alert alert-danger shadow">
-                        <div class="card-header">
-                        <h4>Bulk Emails</h4>
+            <div class="row pt-5">
+                <!-- Email Tracking -->
+                <div class="col-md-4">
+                    <a href="#" class="text-decoration-none text-dark">
+                        <div class="alert alert-warning shadow">
+                            <div class="card-header">
+                            <h4>Email Tracking</h4>
+                            </div>
+                            <div class="card-body">
+                            <p class="card-text">Tracks emails and shows open and click rate</p>
+                            </div>
                         </div>
-                        <div class="card-body">
-                        <p class="card-text">Sends bulk emails to users</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-
-        <div class="row pt-5">
-            <!-- Email Tracking -->
-            <div class="col-md-4">
-                <a href="#" class="text-decoration-none text-dark">
-                    <div class="alert alert-warning shadow">
-                        <div class="card-header">
-                        <h4>Email Tracking</h4>
-                        </div>
-                        <div class="card-body">
-                        <p class="card-text">Tracks emails and shows open and click rate</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
+                    </a>
+                </div>
             
-        <!-- Compress Images -->
-            <div class="col-md-4">
-                <a href="#" class="text-decoration-none text-dark">
-                    <div class="alert alert-danger shadow">
-                        <div class="card-header">
-                        <h4>Compress Images</h4>
+                <!-- Compress Images -->
+                <div class="col-md-4">
+                    <a href="#" class="text-decoration-none text-dark">
+                        <div class="alert alert-danger shadow">
+                            <div class="card-header">
+                            <h4>Compress Images</h4>
+                            </div>
+                            <div class="card-body">
+                            <p class="card-text">Compresses Image files and reduces the size</p>
+                            </div>
                         </div>
-                        <div class="card-body">
-                        <p class="card-text">Compresses Image files and reduces the size</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
+                    </a>
+                </div>
 
-        <!-- Web Scraping -->
-            <div class="col-md-4">
-                <a href="#" class="text-decoration-none text-dark">
-                    <div class="alert alert-warning shadow">
-                        <div class="card-header">
-                        <h4>Web Scraping</h4>
+                <!-- Web Scraping -->
+                <div class="col-md-4">
+                    <a href="#" class="text-decoration-none text-dark">
+                        <div class="alert alert-warning shadow">
+                            <div class="card-header">
+                            <h4>Web Scraping</h4>
+                            </div>
+                            <div class="card-body">
+                            <p class="card-text">Scrapes websites for useful information</p>
+                            </div>
                         </div>
-                        <div class="card-body">
-                        <p class="card-text">Scrapes websites for useful information</p>
-                        </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
             </div>
-        </div>
+        {% else %}
+            <div class="card text-center mt-5 p-3 shadow rounded">
+                <div class="card-body">
+                <h5 class="card-title">Unleash the power of Python</h5>
+                <p class="card-text">
+                    Automate the Boring Stuff with Django: Learn how to leverage Python's powerful Django framework
+                    to build custom automation solutions that streamline data processing, file management,
+                    system administration, web scraping and more, ultimately boosting your productivity.
+                </p>
+                <a href="{% url "login" %}" class="btn btn-success">login</a>
+                <a href="{% url "register" %}" class="btn btn-primary">Register</a>
+                </div>
+            </div>
+        {% endif %}
+
     </div>
 {% endblock content %}
