@@ -15,7 +15,7 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", default=False, cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -33,6 +33,8 @@ INSTALLED_APPS = [
     'emails',
     'crispy_forms',
     'crispy_bootstrap5',
+    'ckeditor',
+    'anymail',
 ]
 
 MIDDLEWARE = [
@@ -114,11 +116,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [    
-    BASE_DIR / "static"   
-]   #| thhhis is for devepolment.
+# STATICFILES_DIRS = [    
+#     BASE_DIR / "static"   
+# ]   #| thhhis is for devepolment.
 
-# STATIC_ROOT =  BASE_DIR / 'static' #| for production
+STATIC_ROOT =  BASE_DIR / 'static' #| for production
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -139,12 +141,32 @@ CELERY_WORKER_POOL = 'solo' #! for windows
 
 
 #| Email Configurations
-EMAIL_HOST = config("EMAIL_HOST")
-EMAIL_PORT = config("EMAIL_PORT", cast=int)
-EMAIL_HOST_USER = config("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
-EMAIL_USE_TLS = True
+# EMAIL_HOST = config("EMAIL_HOST")
+# EMAIL_PORT = config("EMAIL_PORT", cast=int)
+# EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+# EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+# EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = "Automate with Django <agentgupta216@gmail.com>"
 
 
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
+
+#| Ckeditor Settings
+CKEDITOR_CONFIGS = {
+    'default': {
+        # 'toolbar': 'full',
+        'height': 200,
+    },
+}
+
+
+#| Email backend with anymail packege
+EMAIL_BACKEND = "anymail.backends.sendinblue.EmailBackend"
+ANYMAIL = {
+    "SENDINBLUE_API_KEY": config("SENDINBLUE_API_KEY"),
+}
+
+
+CSRF_TRUSTED_ORIGINS = ["https://a33d-2401-4900-1f3c-2621-5577-e2e1-55ec-53b8.ngrok-free.app"]
+BASE_URL = "https://a33d-2401-4900-1f3c-2621-5577-e2e1-55ec-53b8.ngrok-free.app"
